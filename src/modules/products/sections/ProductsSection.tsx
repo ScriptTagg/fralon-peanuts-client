@@ -1,7 +1,7 @@
 import SectionHeading from "@/shared/components/shared/SectionHeading";
 import SectionWrapper from "@/shared/components/shared/SectionWrapper";
 import { P } from "@/shared/components/ui/Typography";
-import ProductCard from "../components/ProductCard";
+import ProductsCarousel from "../components/ProductsCarousel";
 
 export default function ProductsSection() {
   return (
@@ -14,10 +14,8 @@ export default function ProductsSection() {
           perfection, and packed with love and nutrition.
         </P>
       </SectionWrapper>
-      <div className="flex flex-wrap gap-4 px-6 self-center justify-center items-center">
-        {[...Array(4)].map((_, index) => (
-          <ProductCard key={index} />
-        ))}
+      <div className="pl-4 sm:pl-6 lg:pl-8">
+        <ProductsCarousel />
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import SectionWrapper from "@/shared/components/shared/SectionWrapper";
 import AboutIntro from "@/modules/about/sections/AboutIntro";
 import ProductsSection from "@/modules/products/sections/ProductsSection";
 import Identity from "@/modules/about/sections/Identity";
+import WhyUs from "@/modules/about/sections/WhyUs";
+import Testimonials from "@/modules/about/sections/Testimonials";
 
 export default function About() {
   return (
@@ -14,8 +16,10 @@ export default function About() {
       </SectionWrapper>
       <AboutIntro />
       <Identity />
-      <TeamSection />
+      <WhyUs />
       <ProductsSection />
+      <Testimonials />
+      <TeamSection />
     </PageWrapper>
   );
 }
