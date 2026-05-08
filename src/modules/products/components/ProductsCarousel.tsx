@@ -10,9 +10,9 @@ import ProductCard from "./ProductCard";
 export default function ProductsCarousel() {
   return (
     <Carousel className="flex flex-col gap-6">
-      <CarouselContent className="flex md:gap-6 items-center">
+      <CarouselContent className="flex items-center">
         {[...Array(8)].map((_, index) => (
-          <CarouselItem key={index} className="w-fit md:pl-6">
+          <CarouselItem key={index} className="w-fit md:pl-6 pl-4">
             <ProductCard />
           </CarouselItem>
         ))}
