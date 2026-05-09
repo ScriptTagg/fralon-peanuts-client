@@ -71,7 +71,7 @@ export default function VerifyEmailUI() {
           onClick={() => handleResendVerification()}
           disabled={isResending}
           variant="secondary"
-          className="py-1 px-2 w-fit"
+          className="py-1.5 px-2.5 w-fit"
         >
           {isResending ? "Resending..." : "Resend email"}
         </Button>

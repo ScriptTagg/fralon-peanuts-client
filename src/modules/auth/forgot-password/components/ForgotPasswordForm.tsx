@@ -62,7 +62,7 @@ export default function ForgotPasswordForm() {
               {errors.email && <FieldError>{errors.email.message}</FieldError>}
             </Field>
           </FieldGroup>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="w-full">
             {isPending ? "Sending link..." : "Send reset link"}
           </Button>
         </FieldSet>

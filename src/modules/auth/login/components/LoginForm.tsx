@@ -67,7 +67,7 @@ export default function LoginForm() {
             <Link href="/auth/forgot-password" className="text-end text-primary">
               Forgot Password?
             </Link>
-            <Button type="submit" disabled={isPending}>
+            <Button type="submit" disabled={isPending} className="w-full">
               {isPending ? "Logging In..." : "Log in"}
             </Button>
           </div>

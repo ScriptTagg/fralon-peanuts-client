@@ -83,7 +83,7 @@ export default function RegisterForm() {
               {errors.confirmPassword && <FieldError>{errors.confirmPassword.message}</FieldError>}
             </Field>
           </FieldGroup>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="w-full">
             {isPending ? "Signing up..." : "Sign up"}
           </Button>
         </FieldSet>

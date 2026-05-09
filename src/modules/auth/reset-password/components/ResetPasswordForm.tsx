@@ -76,7 +76,7 @@ export default function ResetPasswordForm() {
               {errors.confirmPassword && <FieldError>{errors.confirmPassword.message}</FieldError>}
             </Field>
           </FieldGroup>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="w-full">
             {isPending ? "Reset..." : "Reset password"}
           </Button>
         </FieldSet>

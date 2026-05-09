@@ -1,4 +1,3 @@
-import { parseEnv } from "util";
 import z from "zod";
 
 const envSchema = z.object({
