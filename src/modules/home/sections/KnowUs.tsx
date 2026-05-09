@@ -17,7 +17,7 @@ export default function KnowUs() {
         </P>
         <Button variant="outline">Learn more</Button>
       </article>
-      <div className="md:w-80 md:h-120 w-full h-80 max-w-125 radius-card bg-secondary" />
+      <div className="md:w-80 md:h-120 w-full h-75 max-w-125 radius-card bg-secondary" />
     </SectionWrapper>
   );
 }

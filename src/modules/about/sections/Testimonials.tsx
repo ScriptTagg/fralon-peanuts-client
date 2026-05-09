@@ -5,13 +5,13 @@ import QuotesIcon from "../icons/QuotesIcon";
 
 export default function Testimonials() {
   return (
-    <SectionWrapper className="section-wrapper gap-4">
+    <SectionWrapper className="section-wrapper gap-4 overflow-x-hidden">
       <SectionHeading className="text-center">
         What our customers
         <br /> say about us
       </SectionHeading>
       <QuotesIcon />
-      <div className="">
+      <div className="max-w-full">
         <TestimonialsCarousel />
       </div>
     </SectionWrapper>

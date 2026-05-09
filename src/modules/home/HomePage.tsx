@@ -6,10 +6,12 @@ import WhyUs from "../about/sections/WhyUs";
 import PriceVariants from "./sections/PriceVariants";
 import ProductsSection from "../products/sections/ProductsSection";
 import KnowUs from "./sections/KnowUs";
+import Categories from "./sections/Categories";
 
 export default function HomePage() {
   return (
     <PageWrapper>
+      <Categories />
       <KnowUs />
       <ProductsSection />
       <PriceVariants />
