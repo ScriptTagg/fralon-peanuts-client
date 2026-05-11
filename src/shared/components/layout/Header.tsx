@@ -3,8 +3,8 @@ import SectionWrapper from "../shared/SectionWrapper";
 import Navbar from "./nav/Navbar";
 import LogoutButton from "@/modules/auth/logout/components/LogoutButton";
 import Badge from "../shared/Badge";
-import ProfileButton from "./nav/components/ProfileButton";
 import OpenCartButton from "./nav/components/OpenCartButton";
+import FinalDisplayDropdown from "@/modules/profile/components/FinalDisplayDropdown";
 const MobileNav = dynamic(() => import("./nav/MobileNav"));
 
 export default function Header() {
@@ -24,7 +24,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center w-fit gap-1">
-          <ProfileButton />
+          <FinalDisplayDropdown />
           <OpenCartButton />
         </div>
       </SectionWrapper>

@@ -7,10 +7,12 @@ import PriceVariants from "./sections/PriceVariants";
 import ProductsSection from "../products/sections/ProductsSection";
 import KnowUs from "./sections/KnowUs";
 import Categories from "./sections/Categories";
+import Hero from "./sections/Hero";
 
 export default function HomePage() {
   return (
     <PageWrapper>
+      <Hero />
       <Categories />
       <KnowUs />
       <ProductsSection />
