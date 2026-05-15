@@ -18,18 +18,18 @@ export function ProfileDropdown() {
           <UserRound className="size-6" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="-mt-2 mr-4">
+      <DropdownMenuContent className="-mt-1 mr-4">
         {profileLinks.map((link) => (
           <Link key={link.to} href={`/profile${link.to}`}>
             <DropdownMenuItem className="py-2">
-              <link.icon />
-              <span className="">{link.label}</span>
+              <link.icon className="size-5" />
+              <span className="text-base">{link.label}</span>
             </DropdownMenuItem>
           </Link>
         ))}
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">
-          <LogOutIcon />
+        <DropdownMenuItem variant="destructive" className="text-base">
+          <LogOutIcon className="size-5" />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>

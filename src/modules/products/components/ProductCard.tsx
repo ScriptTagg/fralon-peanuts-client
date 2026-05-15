@@ -1,4 +1,4 @@
-import { P } from "@/shared/components/ui/Typography";
+import { H4, P } from "@/shared/components/ui/Typography";
 import FavButton from "./FavButton";
 import AddToCartBtn from "./AddToCartBtn";
 import Image from "next/image";
@@ -12,7 +12,7 @@ export default function ProductCard() {
         <FavButton />
       </div>
       <div className="flex w-full flex-col gap-1 items-center">
-        <P className="text-body-lg font-bold">Peanut Butter - 800gms</P>
+        <H4 className="text-body-lg font-bold">Peanut Butter - 800gms</H4>
         <small className="text-caption-base text-foreground-muted">Smooth / Crunchy</small>
         <P className="text-body-lg font-semibold">Ksh 550</P>
         <AddToCartBtn />

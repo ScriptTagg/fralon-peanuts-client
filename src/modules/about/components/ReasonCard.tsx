@@ -1,4 +1,4 @@
-import { H5, P } from "@/shared/components/ui/Typography";
+import { H4, P } from "@/shared/components/ui/Typography";
 import type { Reason } from "../content/about-content";
 import { cn } from "@/shared/lib/utils";
 
@@ -13,7 +13,7 @@ export default function ReasonCard({ reason }: { reason: Reason }) {
       <small
         className={cn("text-xl font-secondary text-secondary font-black", reason.id === 2 && "text-primary")}
       >{`0${reason.id}`}</small>
-      <H5>{reason.title}</H5>
+      <H4>{reason.title}</H4>
       <P>{reason.description}</P>
     </article>
   );

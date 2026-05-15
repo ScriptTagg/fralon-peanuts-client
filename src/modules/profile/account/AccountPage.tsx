@@ -6,6 +6,7 @@ import { Award } from "lucide-react";
 import PersonalDetailsForm from "./components/PersonalDetailsForm";
 import AddressDetailsForm from "./components/AddressDetailsForm";
 import { Button } from "@/shared/components/ui/button";
+import LogoutButton from "@/modules/auth/logout/components/LogoutButton";
 
 export default function AccountPage() {
   return (
@@ -36,7 +37,10 @@ export default function AccountPage() {
           <div className="border border-foreground-border radius-card p-4 sm:p-6 flex flex-col gap-4">
             <AddressDetailsForm />
           </div>
-          <Button>Save changes</Button>
+          <div className="flex items-center gap-4 justify-between">
+            <Button>Save changes</Button>
+            <LogoutButton>Log out</LogoutButton>
+          </div>
         </div>
       </SectionWrapper>
     </PageWrapper>

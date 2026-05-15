@@ -11,7 +11,7 @@ export default function Founders() {
         <div className="flex flex-col gap-6 max-w-50 md:max-w-60 ml-auto">
           <div className="">
             <H5>Lawrence Nunda</H5>
-            <small className="text-foreground-muted text-caption-base">Co-Founder</small>
+            <small className="text-foreground-border text-caption-base">Co-Founder</small>
           </div>
           <P className="text-caption-base md:text-base">
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
