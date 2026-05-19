@@ -6,8 +6,8 @@ import { P } from "@/shared/components/ui/Typography";
 export default function AboutIntro() {
   return (
     <SectionWrapper className="flex flex-col max-w-125 lg:max-w-full lg:flex-row gap-6 justify-center lg:justify-around items-center">
-      <div className="radius-card relative w-full h-60 lg:w-82.5 lg:h-90 bg-secondary">
-        <AppImage src="/images/story_img.png" alt="Peanuts" />
+      <div className="radius-card relative w-full h-60 lg:w-82.5 lg:h-90 bg-secondary overflow-hidden">
+        <AppImage src="/images/story_img.png" alt="Peanuts" className="object-cover" />
       </div>
       <div className="section-content lg:max-w-112.5">
         <SectionHeading>Our story</SectionHeading>

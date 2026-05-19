@@ -1,14 +1,13 @@
 import SectionWrapper from "@/shared/components/shared/SectionWrapper";
 import NavButton from "@/shared/components/ui/NavButton";
 import { H1, P } from "@/shared/components/ui/Typography";
-import Image from "next/image";
-/* import heroImage from "../../../../public/images/hero_img.png"; */
+import Header from "@/shared/components/layout/Header";
 
 export default function Hero() {
   return (
-    <div className="min-h-[60vh] relative">
-      {/* <Image src={heroImage} priority alt="peanut butter" className="absolute inset-0" /> */}
-      <SectionWrapper className="">
+    <div className="relative bg-[url('/images/fralon-hero_img.png')] h-[90vh] bg-cover bg-center overflow-hidden flex flex-col">
+      <Header />
+      <SectionWrapper className="flex-1 flex items-center">
         <div className="section-content max-w-155">
           <H1>
             Just pure peanut goodness,

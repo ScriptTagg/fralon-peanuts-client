@@ -3,7 +3,7 @@ import { ShoppingCart } from "lucide-react";
 
 export default function AddToCartBtn() {
   return (
-    <Button className="gap-2" variant="ghost">
+    <Button className="gap-2 py-3" variant="ghost">
       <ShoppingCart />
       <span className="">Add to cart</span>
     </Button>

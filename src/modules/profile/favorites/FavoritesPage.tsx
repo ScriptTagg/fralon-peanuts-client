@@ -1,14 +1,11 @@
-import PageHeading from "@/shared/components/shared/PageHeading";
 import PageWrapper from "@/shared/components/shared/PageWrapper";
-import SectionWrapper from "@/shared/components/shared/SectionWrapper";
 import FavoriteProducts from "./sections/FavoriteProducts";
+import PageHero from "@/shared/components/layout/PageHero";
 
 export default function FavoritesPage() {
   return (
     <PageWrapper>
-      <SectionWrapper>
-        <PageHeading>Favorites</PageHeading>
-      </SectionWrapper>
+      <PageHero title="Favorites" />
       <FavoriteProducts />
     </PageWrapper>
   );

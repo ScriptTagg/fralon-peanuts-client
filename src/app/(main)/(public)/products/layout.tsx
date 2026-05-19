@@ -1,3 +1,4 @@
+import PageHero from "@/shared/components/layout/PageHero";
 import PageWrapper from "@/shared/components/shared/PageWrapper";
 import { generateSEO } from "@/shared/lib/seo";
 import { Metadata } from "next";
@@ -10,5 +11,10 @@ export const metadata: Metadata = generateSEO({
 });
 
 export default function ProductsLayout({ children }: { children: ReactNode }) {
-  return <PageWrapper>{children}</PageWrapper>;
+  return (
+    <PageWrapper>
+      <PageHero title="Products" />
+      {children}
+    </PageWrapper>
+  );
 }

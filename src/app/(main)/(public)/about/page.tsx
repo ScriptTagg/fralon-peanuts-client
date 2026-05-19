@@ -7,13 +7,12 @@ import Identity from "@/modules/about/sections/Identity";
 import WhyUs from "@/modules/about/sections/WhyUs";
 import Testimonials from "@/modules/about/sections/Testimonials";
 import Founders from "@/modules/about/sections/Founders";
+import PageHero from "@/shared/components/layout/PageHero";
 
 export default function About() {
   return (
     <PageWrapper>
-      <SectionWrapper>
-        <PageHeading>About Page</PageHeading>
-      </SectionWrapper>
+      <PageHero title="About Us" />
       <AboutIntro />
       <Identity />
       <Founders />

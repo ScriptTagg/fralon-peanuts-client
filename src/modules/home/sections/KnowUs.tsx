@@ -23,7 +23,7 @@ export default function KnowUs() {
         src={spreadImage}
         placeholder="blur"
         alt="peanut butter"
-        className="md:w-80 md:h-120 w-full h-75 max-w-125 radius-card bg-secondary"
+        className="md:w-80 md:h-120 w-full h-75 max-w-125 object-cover radius-card bg-secondary"
       />
     </SectionWrapper>
   );

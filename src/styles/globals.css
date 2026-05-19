@@ -184,7 +184,7 @@
   }
 
   h1 {
-    @apply font-black text-heading-lg;
+    @apply font-bold text-heading-lg;
   }
   h2 {
     @apply font-bold text-heading-base;

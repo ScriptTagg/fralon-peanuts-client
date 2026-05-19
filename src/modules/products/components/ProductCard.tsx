@@ -14,7 +14,7 @@ export default function ProductCard() {
       <div className="flex w-full flex-col gap-1 items-center">
         <H4 className="text-body-lg font-bold">Peanut Butter - 800gms</H4>
         <small className="text-caption-base text-foreground-muted">Smooth / Crunchy</small>
-        <P className="text-body-lg font-semibold">Ksh 550</P>
+        <P className="text-body-lg font-bold">Ksh 550</P>
         <AddToCartBtn />
       </div>
     </div>
