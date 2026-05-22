@@ -1,13 +1,14 @@
-import PageHeading from "@/shared/components/shared/PageHeading";
+import PageHero from "@/shared/components/layout/PageHero";
 import PageWrapper from "@/shared/components/shared/PageWrapper";
-import SectionWrapper from "@/shared/components/shared/SectionWrapper";
+import CartSection from "./sections/CartSection";
+import MobileCartSection from "./sections/MobileCartSection";
 
 export default function CartPage() {
   return (
     <PageWrapper>
-      <SectionWrapper>
-        <PageHeading>Shopping Cart</PageHeading>
-      </SectionWrapper>
+      <PageHero title="Shopping Cart" />
+      <CartSection />
+      <MobileCartSection />
     </PageWrapper>
   );
 }

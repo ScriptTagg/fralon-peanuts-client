@@ -59,7 +59,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         setUser(user);
       } catch (error) {
         // not logged in or refresh expired
-        console.log("auth error:", error);
         clearSession();
       } finally {
         setIsInitialized(true);

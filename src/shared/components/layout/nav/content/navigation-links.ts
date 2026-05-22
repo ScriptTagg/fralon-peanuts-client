@@ -1,7 +1,7 @@
 import { Bell, ClipboardClock, Heart, SettingsIcon, UserIcon } from "lucide-react";
 
 export const profileLinks = [
-  { to: "/account", label: "Account", icon: UserIcon },
+  { to: "/", label: "Account", icon: UserIcon },
   { to: "/order-history", label: "Order history", icon: ClipboardClock },
   { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/favorites", label: "Favorites", icon: Heart },

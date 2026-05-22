@@ -1,5 +1,5 @@
 "use client";
-import { dateFormatter } from "@/utils/date-formatter";
+import { dateFormatter } from "@/shared/utils/date-formatter";
 import { useEffect, useState } from "react";
 
 export default function Clock() {

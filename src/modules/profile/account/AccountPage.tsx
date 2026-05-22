@@ -16,7 +16,7 @@ export default function AccountPage() {
     <PageWrapper>
       <PageHero title="Account" />
       <SectionWrapper>
-        <div className="flex flex-col gap-6 max-w-217.5">
+        <div className="flex flex-col gap-6 max-w-217.5 mx-auto">
           <AccountInfo user={user} />
 
           <div className="border border-foreground-border radius-card p-4 sm:p-6 flex flex-col gap-4">

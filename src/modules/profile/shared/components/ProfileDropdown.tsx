@@ -20,7 +20,7 @@ export function ProfileDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="-mt-1 mr-4">
         {profileLinks.map((link) => (
-          <Link key={link.to} href={`/profile${link.to}`}>
+          <Link key={link.to} href={`/account${link.to}`}>
             <DropdownMenuItem className="py-2">
               <link.icon className="size-5" />
               <span className="text-base">{link.label}</span>
