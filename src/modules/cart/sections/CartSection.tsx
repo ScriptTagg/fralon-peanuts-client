@@ -13,8 +13,10 @@ import {
 import { ChevronLeft, Trash2, X } from "lucide-react";
 import productImage from "../../../../public/images/product_img.png";
 import Image from "next/image";
-import { P } from "@/shared/components/ui/Typography";
+import { H4, P } from "@/shared/components/ui/Typography";
 import NavButton from "@/shared/components/ui/NavButton";
+import SummaryItem from "../components/SummaryItem";
+import OrderSummary from "../components/OrderSummary";
 
 export const cartItems = [
   {
@@ -24,7 +26,7 @@ export const cartItems = [
     size: "800g",
     price: "ksh 550",
     quantity: 2,
-    subTotal: "Ksh 1100",
+    subTotal: 1100,
   },
   {
     id: 2,
@@ -33,7 +35,7 @@ export const cartItems = [
     size: "400g",
     price: "ksh 250",
     quantity: 4,
-    subTotal: "Ksh 1000",
+    subTotal: 1000,
   },
   {
     id: 3,
@@ -42,7 +44,7 @@ export const cartItems = [
     size: "500g",
     price: "ksh 350",
     quantity: 2,
-    subTotal: "Ksh 700",
+    subTotal: 700,
   },
   {
     id: 4,
@@ -51,15 +53,20 @@ export const cartItems = [
     size: "800g",
     price: "ksh 600",
     quantity: 1,
-    subTotal: "Ksh 600",
+    subTotal: 600,
   },
 ];
 
+export const deliveryFee = 100;
+export const subTotal = cartItems.reduce((acc, current) => {
+  return acc + current.subTotal;
+}, 0);
+
 export default function CartSection() {
   return (
-    <SectionWrapper className="hidden md:block">
+    <SectionWrapper className="hidden sm:block">
       <Table className="max-w-198 mx-auto">
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption className="sr-only">A list of your Cart items.</TableCaption>
         <TableHeader>
           <TableRow className="py-4 border border-foreground-border rounded-lg text-primary text-base font-semibold">
             <TableHead className="w-25">Action</TableHead>
@@ -95,7 +102,7 @@ export default function CartSection() {
           ))}
         </TableBody>
         <TableFooter>
-          <TableRow>
+          <TableRow className="border-none">
             <TableCell colSpan={4}>
               <NavButton variant="ghost" path="/products" className="py-2 px-3 rounded-sm">
                 <ChevronLeft />
@@ -107,6 +114,11 @@ export default function CartSection() {
                 <Trash2 />
                 clear cart
               </Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={5}>
+              <OrderSummary subTotal={subTotal} deliveryFee={deliveryFee} />
             </TableCell>
           </TableRow>
         </TableFooter>
