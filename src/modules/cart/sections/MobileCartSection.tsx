@@ -24,7 +24,9 @@ export default function MobileCartSection() {
           </Button>
         </div>
         <OrderSummary deliveryFee={deliveryFee} subTotal={subTotal} />
-        <Button className="w-full sticky bottom-3">Proceed to checkout</Button>
+        <NavButton path="/checkout" className="w-full sticky bottom-3">
+          Proceed to checkout
+        </NavButton>
       </div>
     </SectionWrapper>
   );
