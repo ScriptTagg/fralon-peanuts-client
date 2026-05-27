@@ -14,11 +14,11 @@ export default function MobileCartSection() {
           <MobileCartItem key={cartItem.id} cartItem={cartItem} />
         ))}
         <div className="flex items-center justify-between border-none">
-          <NavButton variant="ghost" path="/products" className="py-2 px-3 rounded-sm">
+          <NavButton variant="ghost" path="/products" className="py-1 px-2 rounded-sm">
             <ChevronLeft />
             Continue shopping
           </NavButton>
-          <Button variant="ghost" className="py-2 px-3 rounded-sm text-destructive">
+          <Button variant="ghost" className="py-1 px-2 rounded-sm text-destructive">
             <Trash2 />
             clear cart
           </Button>

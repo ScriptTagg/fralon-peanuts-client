@@ -9,8 +9,8 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       <main className="flex flex-col flex-1 gap-10 min-h-[80vh]">
         {children}
         <Toaster position="top-center" />
-        <ActionCenter />
       </main>
+      <ActionCenter />
       <Footer />
     </>
   );
