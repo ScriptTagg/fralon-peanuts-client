@@ -4,7 +4,7 @@ export default function Ordervalue({ title, children }: { title: string; childre
   return (
     <div className="space-y-1">
       <P className="text-primary font-semibold">{title}</P>
-      <small className="">{children}</small>
+      <small className="text-caption-base">{children}</small>
     </div>
   );
 }
