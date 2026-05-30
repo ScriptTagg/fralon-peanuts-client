@@ -3,6 +3,7 @@ import FavButton from "./FavButton";
 import AddToCartBtn from "./AddToCartBtn";
 import Image from "next/image";
 import productImage from "../../../../public/images/product_img.png";
+import Link from "next/link";
 
 export default function ProductCard() {
   return (
@@ -12,7 +13,9 @@ export default function ProductCard() {
         <FavButton />
       </div>
       <div className="flex w-full flex-col gap-1 items-center">
-        <H4 className="text-body-lg font-bold">Peanut Butter - 800gms</H4>
+        <Link href="/products/peanut-butter-800g">
+          <H4 className="text-body-lg font-bold">Peanut Butter - 800gms</H4>
+        </Link>
         <small className="text-caption-base text-foreground-muted">Smooth / Crunchy</small>
         <P className="text-body-lg font-bold">Ksh 550</P>
         <AddToCartBtn />
