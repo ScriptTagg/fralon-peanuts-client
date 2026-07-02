@@ -5,12 +5,12 @@ import { LogOut } from "lucide-react";
 import PersonalDetailsForm from "./components/PersonalDetailsForm";
 import AddressDetailsForm from "./components/AddressDetailsForm";
 import LogoutButton from "@/modules/auth/logout/components/LogoutButton";
-import { useMe } from "./me/useMe";
 import AccountInfo from "./components/AccountInfo";
 import PageHero from "@/shared/components/layout/PageHero";
+import { useAuth } from "@/modules/auth/shared/hooks/useAuth";
 
 export default function AccountPage() {
-  const { data: user, isFetching } = useMe();
+  const { profile: user } = useAuth();
 
   return (
     <PageWrapper>
@@ -24,7 +24,7 @@ export default function AccountPage() {
           </div>
 
           <div className="border border-foreground-border radius-card p-4 sm:p-6 flex flex-col gap-4">
-            <AddressDetailsForm />
+            <AddressDetailsForm user={user} />
           </div>
           <div className="self-end">
             <LogoutButton>

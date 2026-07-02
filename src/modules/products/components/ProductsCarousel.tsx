@@ -1,3 +1,6 @@
+// modules/products/components/storefront/ProductsCarousel.tsx
+"use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -5,15 +8,30 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/shared/components/ui/carousel";
+import { toast } from "sonner";
 import ProductCard from "./ProductCard";
+import ProductCarouselSkeleton from "./ProductsCarouselSkeleton";
+import { useStorefrontVariants } from "../hooks/use-storefront-variants";
 
 export default function ProductsCarousel() {
+  const { data: variants, isLoading } = useStorefrontVariants();
+
+  const handleAddToCart = (variantId: string) => {
+    // wire to cart mutation when ready
+    toast.success("Added to cart");
+    console.log("add to cart:", variantId);
+  };
+
+  if (isLoading) return <ProductCarouselSkeleton />;
+
+  if (!variants || variants.length === 0) return null;
+
   return (
     <Carousel className="flex flex-col gap-8">
       <CarouselContent className="flex items-center">
-        {[...Array(8)].map((_, index) => (
-          <CarouselItem key={index} className="w-fit md:pl-6 pl-4">
-            <ProductCard />
+        {variants.map((variant) => (
+          <CarouselItem key={variant.id} className="w-fit md:pl-6 pl-4">
+            <ProductCard variant={variant} onAddToCart={handleAddToCart} />
           </CarouselItem>
         ))}
       </CarouselContent>

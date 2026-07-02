@@ -1,76 +1,68 @@
 "use client";
 import * as Sentry from "@sentry/nextjs";
-import { getCurrentUser } from "@/modules/profile/account/me/me.api";
-import { refresh } from "@/modules/auth/refresh/refresh.api";
-import type { User } from "@/modules/auth/shared/types";
 import FullScreenLoader from "@/shared/components/layout/FullScreenLoader";
-import { setAccessToken } from "@/shared/lib/api-client";
-import { authBreadcrumbs } from "@/shared/lib/sentry/sentry-breadcrumbs";
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { supabase } from "@/shared/lib/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+import type { ProfileWithAddresses } from "@/modules/profile/account/me/update-profile/update-profile.types";
 
 type AuthContextType = {
-  user: User | null;
-  accessToken: string | null;
+  user: SupabaseUser | null;
+  profile: ProfileWithAddresses | null;
   isAuthenticated: boolean;
-  setSession: (user: User, token: string) => void;
-  clearSession: () => void;
   isInitialized: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [accessToken, setToken] = useState<string | null>(null);
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [profile, setProfile] = useState<ProfileWithAddresses | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const setSession = useCallback((user: User, token: string) => {
-    authBreadcrumbs("Session set", {
-      userId: user.id,
-      email: user.email,
-    });
-    Sentry.setUser({
-      userId: user.id,
-      email: user.email,
-    });
-    setUser(user);
-    setToken(token);
-    setAccessToken(token);
-  }, []);
-
-  const clearSession = useCallback(() => {
-    authBreadcrumbs("Session cleared");
-    Sentry.setUser(null);
-    setUser(null);
-    setToken(null);
-    setAccessToken(null);
-  }, []);
+  const fetchProfile = async (userId: string) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*,addresses(*)")
+      .eq("id", userId)
+      .eq("addresses.is_default", true)
+      .single<ProfileWithAddresses>();
+    setProfile(data);
+  };
 
   useEffect(() => {
     const initAuth = async () => {
-      try {
-        // try refresh
-        const { accessToken } = await refresh();
-        // store token
-        setToken(accessToken);
-        setAccessToken(accessToken);
-        // fetch user
-        const user = await getCurrentUser();
-        setUser(user);
-      } catch (error) {
-        // not logged in or refresh expired
-        clearSession();
-      } finally {
-        setIsInitialized(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+      if (user) {
+        await fetchProfile(user.id);
+        Sentry.setUser({ id: user.id, email: user.email });
       }
+      setIsInitialized(true);
     };
+
     initAuth();
-  }, [clearSession]);
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+        Sentry.setUser({ id: session.user.id, email: session.user.email });
+      } else {
+        setProfile(null);
+        Sentry.setUser(null);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ user, accessToken, isAuthenticated: !!user, setSession, clearSession, isInitialized }}
-    >
+    <AuthContext.Provider value={{ user, profile, isAuthenticated: !!user, isInitialized }}>
       {/* prevent flicker */}
       {!isInitialized ? <FullScreenLoader /> : children}
     </AuthContext.Provider>

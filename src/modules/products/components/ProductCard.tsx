@@ -1,24 +1,86 @@
-import { H4, P } from "@/shared/components/ui/Typography";
-import FavButton from "./FavButton";
-import AddToCartBtn from "./AddToCartBtn";
-import Image from "next/image";
-import productImage from "../../../../public/images/product_img.png";
-import Link from "next/link";
+// modules/products/components/storefront/ProductCard.tsx
+"use client";
 
-export default function ProductCard() {
+import Image from "next/image";
+import Link from "next/link";
+import { ImageIcon, ShoppingCart } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
+import { getVariantImageUrl } from "../lib/product-list.helpers";
+import type { StorefrontVariant } from "../repository/products.repository";
+
+interface ProductCardProps {
+  variant: StorefrontVariant;
+  onAddToCart?: (variantId: string) => void;
+}
+
+export default function ProductCard({ variant, onAddToCart }: ProductCardProps) {
+  const product = variant.products;
+  const imageUrl = getVariantImageUrl(variant);
+  const isOos = !variant.available;
+  const detailHref = `/products/${product?.slug ?? variant.product_id}`;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // don't trigger the card's Link
+    onAddToCart?.(variant.id);
+  };
+
   return (
-    <div className="p-4 border border-primary radius-card gap-2 flex flex-col w-60">
-      <div className="flex-1 relative">
-        <Image src={productImage} alt="peanut butter" className="w-43.5 h-50 mx-auto" />
-        <FavButton />
-      </div>
-      <div className="flex w-full flex-col gap-1 items-center">
-        <Link href="/products/peanut-butter-800g">
-          <H4 className="text-body-lg font-bold">Peanut Butter - 800gms</H4>
-        </Link>
-        <small className="text-caption-base text-foreground-muted">Smooth / Crunchy</small>
-        <P className="text-body-lg font-bold">Ksh 550</P>
-        <AddToCartBtn />
+    <div className="group flex flex-col rounded-xl border bg-card overflow-hidden transition-shadow hover:shadow-md">
+      {/* ── Image — full card is not a link; only image+text area is ── */}
+      <Link href={detailHref} className="block">
+        <div className="relative aspect-square w-full overflow-hidden bg-muted">
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt={`${product?.name ?? ""} ${variant.name}`}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover transition-transform group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <ImageIcon className="h-8 w-8 text-muted-foreground/30" />
+            </div>
+          )}
+
+          {/* out of stock badge — on image so it's caught while scanning */}
+          {isOos && (
+            <div className="absolute top-2 left-2 rounded-full bg-foreground/75 px-2.5 py-0.5 text-[10px] font-medium text-background backdrop-blur-sm">
+              Out of stock
+            </div>
+          )}
+        </div>
+
+        {/* ── Text info ── */}
+        <div className="p-3 pb-2 space-y-0.5">
+          {/* product name — what it is */}
+          <p className="text-sm font-medium leading-snug line-clamp-1 text-foreground">{product?.name ?? "—"}</p>
+
+          {/* variant name — which one */}
+          <p className="text-xs text-muted-foreground">{variant.name}</p>
+
+          {/* price — slightly elevated: one step up in size + semibold */}
+          <p className="text-base font-semibold text-foreground pt-1">KSH {variant.price_ksh.toLocaleString()}</p>
+        </div>
+      </Link>
+
+      {/* ── CTA — outside Link to avoid nested interactive elements ── */}
+      <div className="px-3 pb-3 mt-auto">
+        {isOos ? (
+          <Button size="sm" className="w-full" disabled aria-label={`${product?.name} ${variant.name} is out of stock`}>
+            Out of stock
+          </Button>
+        ) : (
+          <Button
+            size="sm"
+            className="w-full gap-1.5"
+            onClick={handleAddToCart}
+            aria-label={`Add ${product?.name} ${variant.name} to cart`}
+          >
+            <ShoppingCart className="h-3.5 w-3.5" />
+            Add to cart
+          </Button>
+        )}
       </div>
     </div>
   );

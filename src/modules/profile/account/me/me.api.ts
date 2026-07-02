@@ -1,10 +1,9 @@
-import api from "@/shared/lib/api-client";
-import type { User } from "../../../auth/shared/types";
-import type { ApiResponse } from "@/shared/types";
+import { supabase } from "@/shared/lib/supabase/client";
 import { ApiCustomError } from "@/shared/errors/api-error";
+import type { Profile } from "./update-profile/update-profile.types";
 
-export const getCurrentUser = async (): Promise<User> => {
-  const response = await api.get<ApiResponse<User>>("/account");
-  if (!response.data.success) throw new ApiCustomError(response.data.message, response.data.statusCode);
-  return response.data.payload;
+export const getCurrentUser = async (userId: string): Promise<Profile> => {
+  const { data: profile, error } = await supabase.from("profiles").select("*").eq("id", userId).single<Profile>();
+  if (error) throw new ApiCustomError("Failed to fetch user data", 500);
+  return profile;
 };

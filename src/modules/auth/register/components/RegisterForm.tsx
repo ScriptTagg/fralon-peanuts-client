@@ -49,12 +49,7 @@ export default function RegisterForm() {
           <FieldGroup className="gap-3">
             <Field>
               <FieldLabel htmlFor="username">Username</FieldLabel>
-              <Input
-                id="username"
-                type="username"
-                placeholder="you@example.com"
-                {...register("username", { required: true })}
-              />
+              <Input id="username" type="text" placeholder="John Doe" {...register("username", { required: true })} />
               {errors.username && <FieldError>{errors.username.message}</FieldError>}
             </Field>
             <Field>

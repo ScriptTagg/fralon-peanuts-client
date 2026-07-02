@@ -1,3 +1,4 @@
+"use client";
 import RadioBtnWrapper from "@/modules/checkout/components/RadioBtnWrapper";
 import SectionWrapper from "@/shared/components/shared/SectionWrapper";
 import AppImage from "@/shared/components/ui/AppImage";
@@ -5,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/shared/components/ui/radio-group";
 import { H3, H4, P } from "@/shared/components/ui/Typography";
 import productImage from "../../../../public/images/product_img.png";
 import AddToCartBtn from "../components/AddToCartBtn";
+import { Button } from "@/shared/components/ui/button";
 
 export default function SingleProductDetails() {
   return (

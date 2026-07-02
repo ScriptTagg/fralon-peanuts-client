@@ -8,5 +8,7 @@ export const clientConfig = {
   },
   api: {
     apiUrl: clientEnv.NEXT_PUBLIC_API_URL,
+    supabaseUrl: clientEnv.NEXT_PUBLIC_SUPABASE_URL,
+    supabaseKey: clientEnv.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
   },
 };

@@ -2,7 +2,7 @@ import z from "zod";
 
 export const registerSchema = z
   .object({
-    username: z.string().min(3, "Please enter a valid email").max(50, "Name too long").trim(),
+    username: z.string().min(3, "Name too short").max(50, "Name too long").trim(),
     email: z.email("Please enter a valid email").trim().lowercase(),
     password: z
       .string("id field has to be a string")

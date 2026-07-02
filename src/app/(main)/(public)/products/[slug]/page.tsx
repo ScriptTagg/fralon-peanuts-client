@@ -1,6 +1,5 @@
-import SingleProductPage from "@/modules/products/SingleProductPage";
+import SingleProductPage from "@/modules/products/pages/SingleProductPage";
 
-export default async function SingleProduct({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function SingleProduct() {
   return <SingleProductPage />;
 }

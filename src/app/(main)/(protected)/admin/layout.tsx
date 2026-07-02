@@ -6,15 +6,15 @@ import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  const { isAuthenticated, isInitialized, user } = useAuth();
+  const { isAuthenticated, isInitialized, profile } = useAuth();
 
   if (!isInitialized) return <FullScreenLoader />;
   // Not logged in
-  if (!user) {
+  if (!profile) {
     redirect("/auth/login");
   }
   // Logged in but not admin
-  if (isAuthenticated && !requireRoles(user.roles, ["admin"])) {
+  if (isAuthenticated && !requireRoles([profile.role], ["admin"])) {
     redirect("/unauthorized");
   }
   return <>{children}</>;

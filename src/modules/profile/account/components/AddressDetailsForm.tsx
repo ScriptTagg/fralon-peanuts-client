@@ -1,14 +1,20 @@
 "use client";
 import { Button } from "@/shared/components/ui/button";
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldLegend, FieldSet } from "@/shared/components/ui/field";
-import { Input } from "@/shared/components/ui/input";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/shared/components/ui/field";
 import { H4 } from "@/shared/components/ui/Typography";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil, Save } from "lucide-react";
-import { useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { Activity, useEffect, useState } from "react";
+import { Controller, useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { addressDetailsSchema, type AddressDetailsInput } from "../schemas/address-details.schema";
-import { getErrorMessage } from "@/shared/utils/get-error-message";
 import {
   Select,
   SelectContent,
@@ -17,28 +23,83 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
+import type { ProfileWithAddresses } from "../me/update-profile/update-profile.types";
+import { Textarea } from "@/shared/components/ui/textarea";
+import { nairobiLocations } from "../content/delivery-locations";
+import { useUpdateAddress } from "../me/update-address/useUpdateAddress";
+import { useCreateAddress } from "../me/create-address/useCreateAddress";
+import FormError from "@/shared/components/shared/FormError";
 
-export default function AddressDetailsForm() {
+type Constituency = keyof typeof nairobiLocations;
+
+export default function AddressDetailsForm({ user }: { user: ProfileWithAddresses | null }) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { mutateAsync, isPending } = useUpdateAddress();
+  const { mutateAsync: createAddress, isPending: isCreating } = useCreateAddress();
+
+  if (!user?.addresses) return <div className="">No address setup yet</div>;
+
   const {
     register,
     handleSubmit,
+    control,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<AddressDetailsInput>({
     resolver: zodResolver(addressDetailsSchema),
+    defaultValues: {
+      constituency: user?.addresses[0].constituency ?? "",
+      ward: user?.addresses[0].ward ?? "",
+      street: user?.addresses[0].street ?? "",
+    },
   });
 
-  const handleUpdatePersonalDetails: SubmitHandler<AddressDetailsInput> = async (data) => {
+  useEffect(() => {
+    console.log("reset running repeatedly");
+    if (user?.addresses[0]) {
+      reset(user.addresses[0]);
+    }
+  }, [reset, user?.addresses[0].id]);
+
+  const constituencies = Object.keys(nairobiLocations);
+
+  const selectedConstituency = useWatch<AddressDetailsInput>({
+    name: "constituency",
+    control,
+  });
+
+  const wards = selectedConstituency && nairobiLocations[selectedConstituency as Constituency];
+
+  const handleUpdateAddressDetails: SubmitHandler<Partial<AddressDetailsInput>> = async (data) => {
+    const updates = Object.keys(dirtyFields).reduce((acc, key) => {
+      acc[key as keyof AddressDetailsInput] = data[key as keyof AddressDetailsInput];
+      return acc;
+    }, {} as Partial<AddressDetailsInput>);
+
     try {
-      /*  await mutateAsync(data); */
-      reset();
+      const newAddresses = await mutateAsync(updates);
+      reset(newAddresses);
+      setIsEditing(false);
     } catch (err) {
-      console.log("Login error :", getErrorMessage(err));
+      console.log("updating error :", err);
     }
   };
+
+  const handleCreateAddress: SubmitHandler<AddressDetailsInput> = async (data) => {
+    try {
+      const newAddresses = await createAddress(data);
+      reset(newAddresses);
+      setIsEditing(false);
+    } catch (err) {
+      console.log("creating error :", err);
+    }
+  };
+
   return (
-    <form className="max-w-150 mx-0">
+    <form
+      onSubmit={handleSubmit(!user?.addresses[0].id ? handleCreateAddress : handleUpdateAddressDetails)}
+      className="max-w-150 mx-0"
+    >
       <FieldSet className="gap-6">
         <div className="flex items-center gap-4 justify-between">
           <div className="">
@@ -48,62 +109,97 @@ export default function AddressDetailsForm() {
             <FieldDescription>Update your delivery address info.</FieldDescription>
           </div>
           <div className="flex items-center gap-2">
-            <Button onClick={() => setIsEditing(!isEditing)} size="sm" variant="ghost">
+            <Button type="button" onClick={() => setIsEditing(true)} size="sm" variant="ghost">
               <Pencil />
               Edit
             </Button>
-            <Button disabled={!isDirty} size="sm">
+            <Button type="submit" disabled={!isDirty} size="sm">
               <Save />
-              Save
+              {isPending ? "Saving..." : "Save"}
             </Button>
           </div>
         </div>
-        {/* <Activity mode={error ? "visible" : "hidden"}>
-                <FormError>{getErrorMessage(error)}</FormError>
-              </Activity> */}
-
+        <Activity mode={errors.root ? "visible" : "hidden"}>
+          <FormError>{errors.root?.message}</FormError>
+        </Activity>
         <FieldGroup className="gap-4 grid grid-cols-1 sm:grid-cols-2">
-          <Field>
-            <FieldLabel htmlFor="constituency">Sub County / Constituency</FieldLabel>
-            <Select disabled={!isEditing}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose your Constituency" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="Njiru">Embakasi</SelectItem>
-                  <SelectItem value="Kasarani">Kasarani</SelectItem>
-                  <SelectItem value="Kamkunji">Kamkunji</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </Field>
+          <Controller
+            name="constituency"
+            control={control}
+            render={({ field, fieldState }) => {
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>Sub County / Constituency</FieldLabel>
+                  <Select
+                    disabled={!isEditing}
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={(value) => {
+                      console.log("Selected Constituency::", value);
+                      field.onChange(value);
+                    }}
+                  >
+                    <SelectTrigger id={field.name} aria-invalid={fieldState.invalid}>
+                      <SelectValue placeholder="Choose your Constituency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {constituencies.map((constituency) => (
+                          <SelectItem key={constituency} value={constituency}>
+                            {constituency}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </Field>
+              );
+            }}
+          />
 
-          <Field>
-            <FieldLabel htmlFor="ward">Ward</FieldLabel>
-            <Select disabled={!isEditing}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose your Ward" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="Njiru">Engineering</SelectItem>
-                  <SelectItem value="Kasarani">Design</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </Field>
+          <Controller
+            name="ward"
+            control={control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="ward">Ward</FieldLabel>
+                <Select
+                  disabled={!isEditing || !selectedConstituency}
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose your Ward" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {wards &&
+                        wards.map((ward) => (
+                          <SelectItem key={ward} value={ward}>
+                            {ward}
+                          </SelectItem>
+                        ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
 
-          <Field className="sm:col-span-2">
-            <FieldLabel htmlFor="area">Area / Street</FieldLabel>
-            <Input
+          <Field data-invalid={!!errors.street} className="sm:col-span-2">
+            <FieldLabel htmlFor="street">Area / Street</FieldLabel>
+            <Textarea
+              id="street"
               disabled={!isEditing}
-              id="area"
-              type="text"
-              placeholder="Obama Estate"
-              /* {...register("email", { required: true })} */
+              aria-invalid={!!errors.street}
+              placeholder="Describe your area"
+              className="min-h-14"
+              {...register("street")}
             />
-            {/* {errors.email && <FieldError>{errors.email.message}</FieldError>} */}
+            {errors?.street && <FieldError>{errors.street.message}</FieldError>}
           </Field>
         </FieldGroup>
       </FieldSet>

@@ -7,7 +7,6 @@ export const useResetPassword = () => {
   return useMutation({
     mutationFn: (data: ResetPasswordRequest) => resetPassword(data),
     onSuccess: (data) => {
-      console.log("register :", data);
       toast.success("Email sent successfully");
     },
     onError: (error) => {

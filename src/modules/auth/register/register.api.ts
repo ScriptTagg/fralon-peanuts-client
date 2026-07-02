@@ -1,11 +1,22 @@
-import api from "@/shared/lib/api-client";
+"use server";
 import type { RegisterInput } from "./register.schema";
 import { ApiCustomError } from "@/shared/errors/api-error";
-import { ApiResponse } from "@/shared/types";
 import type { RegisterDto } from "./register.types";
+import { createClient } from "@/shared/lib/supabase/server";
 
 export const register = async (data: RegisterInput): Promise<RegisterDto> => {
-  const response = await api.post<ApiResponse<RegisterDto>>("/auth/signup", data);
-  if (!response.data.success) throw new ApiCustomError(response.data.message, response.data.statusCode);
-  return response.data.payload;
+  const supabase = await createClient();
+  const { data: authData, error } = await supabase.auth.signUp({
+    email: data.email,
+    password: data.password,
+    options: {
+      data: { full_name: data.username },
+    },
+  });
+  if (error) {
+    console.log(error.message);
+    throw new ApiCustomError(error.message, error.status ?? 500);
+  }
+  if (!authData.user) throw new ApiCustomError("Failed to register", 500);
+  return authData.user;
 };

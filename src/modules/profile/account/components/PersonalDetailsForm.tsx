@@ -14,41 +14,58 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { personalDetailsSchema, type PersonalDetailsInput } from "../schemas/personal-details.schema";
 import { Activity, useEffect, useState } from "react";
-import FormError from "@/shared/components/shared/FormError";
-import { getErrorMessage } from "@/shared/utils/get-error-message";
 import { Button } from "@/shared/components/ui/button";
 import { Pencil, Save } from "lucide-react";
+import { useUpdateProfile } from "../me/update-profile/useUpdateProfile";
+import type { ProfileWithAddresses } from "../me/update-profile/update-profile.types";
+import FormError from "@/shared/components/shared/FormError";
 
-export default function PersonalDetailsForm({ user }: { user: User | undefined }) {
+export default function PersonalDetailsForm({ user }: { user: ProfileWithAddresses | null }) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { mutateAsync, isPending } = useUpdateProfile();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<PersonalDetailsInput>({
     resolver: zodResolver(personalDetailsSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      phone: "",
+      full_name: user?.full_name ?? "",
+      email: user?.email ?? "",
+      phone: user?.phone ?? "",
     },
   });
 
   useEffect(() => {
     if (user) {
-      reset(user);
+      reset({
+        full_name: user.full_name,
+        email: user.email,
+        phone: user.phone ?? "",
+      });
     }
   }, [reset, user]);
 
   const handleUpdatePersonalDetails: SubmitHandler<PersonalDetailsInput> = async (data) => {
+    const updates = Object.keys(dirtyFields).reduce((acc, key) => {
+      acc[key as keyof PersonalDetailsInput] = data[key as keyof PersonalDetailsInput];
+      return acc;
+    }, {} as Partial<PersonalDetailsInput>);
+
     try {
-      /*  await mutateAsync(data); */
-      reset();
+      const newProfile = await mutateAsync(updates);
+      reset({
+        full_name: newProfile.full_name,
+        email: newProfile.email,
+        phone: newProfile.phone ?? "",
+      });
+      setIsEditing(false);
     } catch (err) {
-      console.log("Login error :", getErrorMessage(err));
+      console.log("updating error :", err);
     }
   };
+
   return (
     <form onSubmit={handleSubmit(handleUpdatePersonalDetails)} className="max-w-150 mx-0">
       <FieldSet className="gap-6">
@@ -60,24 +77,24 @@ export default function PersonalDetailsForm({ user }: { user: User | undefined }
             <FieldDescription>Update your personal info.</FieldDescription>
           </div>
           <div className="flex items-center gap-2">
-            <Button onClick={() => setIsEditing(!isEditing)} size="sm" variant="ghost">
+            <Button type="button" onClick={() => setIsEditing(true)} size="sm" variant="ghost">
               <Pencil />
               Edit
             </Button>
-            <Button disabled={!isDirty} size="sm">
+            <Button type="submit" disabled={!isDirty} size="sm">
               <Save />
-              Save
+              {isPending ? "Saving..." : "Save"}
             </Button>
           </div>
         </div>
-        {/* <Activity mode={error ? "visible" : "hidden"}>
-          <FormError>{getErrorMessage(error)}</FormError>
-        </Activity> */}
+        <Activity mode={errors.root ? "visible" : "hidden"}>
+          <FormError>{errors.root?.message}</FormError>
+        </Activity>
         <FieldGroup className="gap-4 grid grid-cols-1 sm:grid-cols-2">
           <Field className="sm:col-span-2">
-            <FieldLabel htmlFor="username">Username</FieldLabel>
-            <Input disabled={!isEditing} id="username" type="text" {...register("username")} />
-            {errors.username && <FieldError>{errors.username.message}</FieldError>}
+            <FieldLabel htmlFor="full_name">Full Name</FieldLabel>
+            <Input disabled={!isEditing} id="full_name" type="text" {...register("full_name")} />
+            {errors.full_name && <FieldError>{errors.full_name.message}</FieldError>}
           </Field>
 
           <Field>

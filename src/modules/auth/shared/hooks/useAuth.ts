@@ -2,7 +2,7 @@
 import { useAuthContext } from "@/providers/AuthProvider";
 
 export const useAuth = () => {
-  const { user, isAuthenticated, isInitialized } = useAuthContext();
-  return { user, isAuthenticated, isInitialized };
+  const { user, profile, isAuthenticated, isInitialized } = useAuthContext();
+  return { user, profile, isAuthenticated, isInitialized };
 };
 // readonly state
