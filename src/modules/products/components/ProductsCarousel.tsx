@@ -30,7 +30,10 @@ export default function ProductsCarousel() {
     <Carousel className="flex flex-col gap-8">
       <CarouselContent className="flex items-center">
         {variants.map((variant) => (
-          <CarouselItem key={variant.id} className="w-fit md:pl-6 pl-4">
+          <CarouselItem
+            key={variant.id}
+            className="pl-4 md:pl-6 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+          >
             <ProductCard variant={variant} onAddToCart={handleAddToCart} />
           </CarouselItem>
         ))}

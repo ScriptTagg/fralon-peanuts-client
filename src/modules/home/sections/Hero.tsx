@@ -2,6 +2,7 @@ import SectionWrapper from "@/shared/components/shared/SectionWrapper";
 import NavButton from "@/shared/components/ui/NavButton";
 import { H1, P } from "@/shared/components/ui/Typography";
 import Header from "@/shared/components/layout/Header";
+import HeroCta from "../components/HeroCta";
 
 export default function Hero() {
   return (
@@ -17,12 +18,7 @@ export default function Hero() {
             Not Just Any Butter, It's Peanut Perfection. Nutty, But in the Best Way. We offer quality peanut butter
             products. You can get all our products in a store nearby.
           </P>
-          <div className="flex flex-row gap-4 sm:gap-6">
-            <NavButton path="/products">View Products</NavButton>
-            <NavButton path="/auth/login" variant="outline">
-              Log in
-            </NavButton>
-          </div>
+          <HeroCta />
         </div>
       </SectionWrapper>
     </div>
