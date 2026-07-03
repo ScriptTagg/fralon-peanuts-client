@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header className="py-1">
       <SectionWrapper className="flex items-center justify-between">
-        <div className="flex items-center w-fit gap-1">
+        <div className="flex items-center w-fit">
           <div className="md:hidden">
             <MobileNav />
           </div>

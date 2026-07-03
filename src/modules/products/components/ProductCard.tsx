@@ -17,7 +17,7 @@ export default function ProductCard({ variant, onAddToCart }: ProductCardProps) 
   const product = variant.products;
   const imageUrl = getVariantImageUrl(variant);
   const isOos = !variant.available;
-  const detailHref = `/products/${product?.slug ?? variant.product_id}`;
+  const detailHref = `/products/${variant.product_id}`;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault(); // don't trigger the card's Link

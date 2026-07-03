@@ -50,7 +50,6 @@ export default function MobileNav() {
           </ul>
         </nav>
         <SheetFooter className="text-center p-0">
-          <small className="text-green-400">{siteConfig.name}</small>
           <Copyright />
         </SheetFooter>
       </SheetContent>
