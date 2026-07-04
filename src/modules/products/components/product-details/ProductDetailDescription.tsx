@@ -39,7 +39,7 @@ export default function ProductDetailDescription({ description, metadata }: Prod
           <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Details</h2>
           <dl className="divide-y rounded-xl border overflow-hidden">
             {attributes.map(([key, value]) => (
-              <div key={key} className="flex items-start gap-4 px-4 py-3 divide-x divide-primary">
+              <div key={key} className="flex items-center gap-4 px-4 py-3 divide-x divide-primary">
                 <dt className="w-32 shrink-0 text-xs font-medium text-muted-foreground capitalize">{key}</dt>
                 <dd className="text-sm text-foreground">{value}</dd>
               </div>

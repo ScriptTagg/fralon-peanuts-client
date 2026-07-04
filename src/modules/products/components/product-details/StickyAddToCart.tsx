@@ -40,8 +40,8 @@ export default function StickyAddToCart({ variant, cart }: StickyAddToCartProps)
     >
       {/* ── Left — variant name + price ── */}
       <div className="min-w-0">
-        <p className="text-xs text-muted-foreground truncate">{variant.name}</p>
-        <p className="text-lg font-bold">KSH {variant.price_ksh.toLocaleString()}</p>
+        <p className="text-sm text-muted-foreground truncate">{variant.name}</p>
+        <p className="text-xl font-bold">KSH {variant.price_ksh.toLocaleString()}</p>
       </div>
 
       {/* ── Right — CTA ── */}
@@ -51,13 +51,13 @@ export default function StickyAddToCart({ variant, cart }: StickyAddToCartProps)
             Out of stock
           </Button>
         ) : inCart ? (
-          <div className="flex items-center rounded-md border">
-            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-r-none" onClick={handleDecrement}>
+          <div className="flex items-center rounded-lg p-1 border">
+            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-r-none" onClick={handleDecrement}>
               <Minus className="h-4 w-4" />
               <span className="sr-only">Decrease quantity</span>
             </Button>
-            <span className="w-8 text-center text-sm font-semibold">{quantity}</span>
-            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-l-none" onClick={handleIncrement}>
+            <span className="w-10 text-center text-sm font-semibold">{quantity}</span>
+            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-l-none" onClick={handleIncrement}>
               <Plus className="h-4 w-4" />
               <span className="sr-only">Increase quantity</span>
             </Button>

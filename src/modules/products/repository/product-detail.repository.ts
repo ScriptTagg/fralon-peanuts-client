@@ -14,13 +14,13 @@ const _shape = supabase
     product_variants(id, name, sku, price_ksh, stock_quantity, is_active, available, weight_gms)
   `,
   )
-  .eq("id", "")
+  .eq("slug", "")
   .single();
 
 export type ProductDetail = QueryData<typeof _shape>;
 
 export const productDetailRepository = {
-  async getProduct(id: string): Promise<ProductDetail> {
+  async getProduct(slug: string): Promise<ProductDetail> {
     const { data, error } = await supabase
       .from("products")
       .select(
@@ -31,7 +31,7 @@ export const productDetailRepository = {
         product_variants(id, name, sku, price_ksh, stock_quantity, is_active, available, weight_gms)
       `,
       )
-      .eq("id", id)
+      .eq("slug", slug)
       .eq("is_active", true)
       .single();
 

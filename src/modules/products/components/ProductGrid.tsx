@@ -11,7 +11,7 @@ interface ProductsGridProps {
 
 export function ProductsGrid({ variants, onAddToCart }: ProductsGridProps) {
   return (
-    <SectionWrapper className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+    <SectionWrapper className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 sm:grid-cols-3 lg:grid-cols-4">
       {variants.map((variant) => (
         <ProductCard key={variant.id} variant={variant} onAddToCart={onAddToCart} />
       ))}
@@ -21,7 +21,7 @@ export function ProductsGrid({ variants, onAddToCart }: ProductsGridProps) {
 
 export function ProductsGridSkeleton({ count = 8 }: { count?: number }) {
   return (
-    <SectionWrapper className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+    <SectionWrapper className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 sm:grid-cols-3 lg:grid-cols-4">
       {[...Array(count)].map((_, i) => (
         <ProductCardSkeleton key={i} />
       ))}

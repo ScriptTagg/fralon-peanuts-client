@@ -4,7 +4,7 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 
 export default function ProductDetailSkeleton() {
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6 md:py-10">
+    <div className="max-w-5xl w-full mx-auto px-4 py-6 md:py-10">
       {/* breadcrumb */}
       <Skeleton className="h-8 w-32 mb-6" />
 
