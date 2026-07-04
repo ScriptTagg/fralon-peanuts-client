@@ -29,17 +29,17 @@ export default function ProductDetailDescription({ description, metadata }: Prod
 
       {hasDescription && (
         <div className="space-y-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Description</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Description</h2>
           <p className="text-sm leading-relaxed text-foreground/90">{description}</p>
         </div>
       )}
 
       {hasAttributes && (
-        <div className="space-y-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Details</h2>
+        <div className="space-y-3 max-w-140">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Details</h2>
           <dl className="divide-y rounded-xl border overflow-hidden">
             {attributes.map(([key, value]) => (
-              <div key={key} className="flex items-start gap-4 px-4 py-3">
+              <div key={key} className="flex items-start gap-4 px-4 py-3 divide-x divide-primary">
                 <dt className="w-32 shrink-0 text-xs font-medium text-muted-foreground capitalize">{key}</dt>
                 <dd className="text-sm text-foreground">{value}</dd>
               </div>

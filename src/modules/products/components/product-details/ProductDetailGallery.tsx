@@ -48,7 +48,7 @@ export default function ProductDetailGallery({ images, productName }: ProductDet
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+            <ImageIcon className="h-12 w-12 text-foreground-muted" />
           </div>
         )}
       </div>

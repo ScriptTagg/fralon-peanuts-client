@@ -16,7 +16,7 @@ export default function ActionCenter() {
         className="absolute top-0 left-0 object-cover"
         sizes="(max-width:768px) 100vw, 50vw"
       />
-      <SectionWrapper className="flex z-50 relative justify-center h-full flex-col gap-4">
+      <SectionWrapper className="flex z-40 relative justify-center h-full flex-col gap-4">
         <div className="flex flex-col gap-2 text-background max-w-85">
           <H3 className="text-background">Pure. Natural. Wholesome</H3>
           <P>Quality peanut products made for everyday healthy living.</P>

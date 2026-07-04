@@ -34,14 +34,14 @@ export default function StickyAddToCart({ variant, cart }: StickyAddToCartProps)
         "md:hidden",
         "fixed bottom-0 left-0 right-0 z-50",
         "border-t bg-background/95 backdrop-blur-sm",
-        "px-4 py-3 shadow-lg",
+        "px-6 py-3 shadow-lg",
         "flex items-center justify-between gap-4",
       ].join(" ")}
     >
       {/* ── Left — variant name + price ── */}
       <div className="min-w-0">
         <p className="text-xs text-muted-foreground truncate">{variant.name}</p>
-        <p className="text-base font-bold">KSH {variant.price_ksh.toLocaleString()}</p>
+        <p className="text-lg font-bold">KSH {variant.price_ksh.toLocaleString()}</p>
       </div>
 
       {/* ── Right — CTA ── */}
@@ -63,8 +63,8 @@ export default function StickyAddToCart({ variant, cart }: StickyAddToCartProps)
             </Button>
           </div>
         ) : (
-          <Button onClick={handleAddToCart}>
-            <ShoppingCart className="h-4 w-4" />
+          <Button onClick={handleAddToCart} className="gap-x-3">
+            <ShoppingCart className="size-4" />
             Add to cart
           </Button>
         )}

@@ -8,6 +8,7 @@ import { Separator } from "@/shared/components/ui/separator";
 import ProductVariantSelector from "./ProductVariantSelector";
 import type { ProductDetail } from "../../repository/product-detail.repository";
 import type { CartActions } from "@/modules/cart/hooks/use-cart-stub";
+import FavButton from "../FavButton";
 
 type Variant = ProductDetail["product_variants"][number];
 
@@ -49,17 +50,22 @@ export default function ProductDetailInfo({ product, selectedVariant, onVariantC
   return (
     <div className="flex flex-col gap-5">
       {/* ── 1. Name ── */}
-      <div className="space-y-1">
-        <h1 className="text-2xl font-semibold leading-tight">{product.name}</h1>
-        {product.categories && <p className="text-sm text-muted-foreground">{product.categories.name}</p>}
+      <div className="space-y-4 border-b border-foreground-muted pb-4 ">
+        <div className="flex gap-3">
+          <div className="flex-1">
+            {product.categories && (
+              <p className="text-xs uppercase tracking-widest text-accent">{product.categories.name}</p>
+            )}
+            <h1 className="text-2xl font-semibold leading-tight">{product.name}</h1>
+          </div>
+          <FavButton />
+        </div>
+
+        {/* ── 2. Price — elevated weight ── */}
+        {selectedVariant && (
+          <p className="text-3xl font-bold tracking-tight">KSH {selectedVariant.price_ksh.toLocaleString()}</p>
+        )}
       </div>
-
-      {/* ── 2. Price — elevated weight ── */}
-      {selectedVariant && (
-        <p className="text-3xl font-bold tracking-tight">KSH {selectedVariant.price_ksh.toLocaleString()}</p>
-      )}
-
-      <Separator />
 
       {/* ── 3. Variant selector ── */}
       <ProductVariantSelector
@@ -77,7 +83,7 @@ export default function ProductDetailInfo({ product, selectedVariant, onVariantC
               Only {selectedVariant.stock_quantity} left
             </Badge>
           )}
-          {stockStatus === "ok" && <Badge className="bg-success/10 text-success border-0">In stock</Badge>}
+          {stockStatus === "ok" && <Badge className="bg-success/10 text-green-700 text-sm border-0">In stock</Badge>}
         </div>
       )}
 

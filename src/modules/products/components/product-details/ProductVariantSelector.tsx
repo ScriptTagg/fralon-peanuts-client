@@ -19,7 +19,7 @@ export default function ProductVariantSelector({ variants, selectedVariantId, on
 
   return (
     <div className="space-y-2">
-      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Size</p>
+      <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Size :</p>
       <div className="flex flex-wrap gap-2">
         {variants.map((variant) => {
           const isSelected = variant.id === selectedVariantId;

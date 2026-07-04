@@ -16,7 +16,7 @@ export default function HomePage() {
       <Categories />
       <KnowUs />
       <ProductsSection />
-      <PriceVariants />
+      {/* <PriceVariants /> */}
       <WhyUs />
       <WasteRecycle />
       <Testimonials />

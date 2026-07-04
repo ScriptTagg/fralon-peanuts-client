@@ -25,7 +25,7 @@ export default function ProductCard({ variant, onAddToCart }: ProductCardProps) 
   };
 
   return (
-    <div className="group flex flex-col rounded-xl border bg-card overflow-hidden transition-shadow hover:shadow-md">
+    <div className="group flex flex-col rounded-xl border border-foreground-border bg-card overflow-hidden transition-shadow hover:shadow-md">
       {/* ── Image — full card is not a link; only image+text area is ── */}
       <Link href={detailHref} className="block">
         <div className="relative aspect-square w-full overflow-hidden bg-muted">
@@ -39,7 +39,7 @@ export default function ProductCard({ variant, onAddToCart }: ProductCardProps) 
             />
           ) : (
             <div className="flex h-full items-center justify-center">
-              <ImageIcon className="h-8 w-8 text-muted-foreground/30" />
+              <ImageIcon className="h-8 w-8 text-foreground-muted" />
             </div>
           )}
 
@@ -77,7 +77,7 @@ export default function ProductCard({ variant, onAddToCart }: ProductCardProps) 
             onClick={handleAddToCart}
             aria-label={`Add ${product?.name} ${variant.name} to cart`}
           >
-            <ShoppingCart className="h-3.5 w-3.5" />
+            <ShoppingCart className="size-4" />
             Add to cart
           </Button>
         )}
